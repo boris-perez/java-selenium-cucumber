@@ -1,0 +1,38 @@
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'info.cukes', name: 'cucumber-java', version: '1.2.5'
+    testCompile group: 'info.cukes', name: 'cucumber-testng', version: '1.2.5'
+    testCompile group: 'org.slf4j', name: 'slf4j-nop', version: '1.7.25'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.0.0-alpha-1'
+    compile group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '1.7.2'
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+}
+
+tasks.withType(Test) {
+    useTestNG()
+
+    systemProperty "tags", tags
+    systemProperty "featuresPath", featuresPath
+}
+
+task runFeatures(type: Test) {
+    options {
+        jvmArgs = [ '-Dcucumber.options= ' +
+                            '--glue com.automationpractice ' +
+                            '--plugin pretty ' +
+                            '--plugin json:build/cucumber/cucumber.json ' +
+                            '--plugin rerun:build/cucumber/rerun.txt ' +
+                            'classpath: ' + featuresPath + ' ' +
+                            '--tags ' + tags
+        ]
+    }
+}
