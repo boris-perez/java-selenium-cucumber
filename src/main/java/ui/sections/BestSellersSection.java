@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.BasePageObject;
+import ui.layers.CartProductLayer;
 
 /**
  * This class contains the methods to interact with the BestSellersSection.
@@ -46,6 +47,20 @@ public class BestSellersSection extends BasePageObject {
         UIMethods.scrollToElement(productImage);
         WebElement productPriceReductionTag = UIMethods.getElement(productPriceReductionTagBy);
         return productPriceReductionTag.getText();
+    }
+
+    /**
+     * Adds the given product to cart
+     * @param productName
+     * @return CartProductLayer
+     */
+    public CartProductLayer addProductToCart(String productName) {
+        By addProductToCartBy = By.xpath(String.format(ADD_PRODUCT_TO_CART_XPATH, productName));
+        WebElement productImage = getProductImageWebElement(productName);
+        UIMethods.moveMouseToElement(productImage);
+        WebElement addProductToCart = UIMethods.getElement(addProductToCartBy);
+        addProductToCart.click();
+        return new CartProductLayer();
     }
 
     /**
