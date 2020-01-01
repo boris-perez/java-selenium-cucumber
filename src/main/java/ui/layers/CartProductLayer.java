@@ -10,7 +10,7 @@ import ui.pages.HomePage;
  * This class contains the methods to interact with the CartProductLayer.
  */
 public class CartProductLayer extends BasePageObject {
-    @FindBy(id = "//span[@title='Continue shopping']")
+    @FindBy(xpath = "//span[@title='Continue shopping']")
     WebElement continueShoppingButton;
 
     /**
